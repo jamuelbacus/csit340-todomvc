@@ -14,6 +14,8 @@ function Todos() {
     return true;
   });
 
+  const remainingTodos = todos.filter((todo) => !todo.completed).length;
+
   function handleSubmit(e) {
     e.preventDefault();
     const trimmed = text.trim();
@@ -122,13 +124,8 @@ function Todos() {
 
             <footer className="grid h-10 grid-cols-3 items-center border-t border-[#e6e6e6] px-[15px] text-[15px]">
               <span>
-                <strong className="font-light">
-                  {filteredTodos.filter((todo) => !todo.completed).length}
-                </strong>{" "}
-                {filteredTodos.filter((todo) => !todo.completed).length === 1
-                  ? "item"
-                  : "items"}{" "}
-                left
+                <strong className="font-light">{remainingTodos}</strong>{" "}
+                {remainingTodos === 1 ? "item" : "items"} left
               </span>
               <ul className="flex justify-center gap-1">
                 {["All", "Active", "Completed"].map((name) => (
@@ -147,7 +144,7 @@ function Todos() {
                   </li>
                 ))}
               </ul>
-              {filteredTodos.filter((todo) => todo.completed).length > 0 && (
+              {todos.some((todo) => todo.completed) && (
                 <button
                   type="button"
                   className="cursor-pointer justify-self-end hover:underline"
